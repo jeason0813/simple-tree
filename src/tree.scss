@@ -1,33 +1,28 @@
 .simple-tree {
-	&, .tree {
-		list-style: none;
-		-webkit-padding-start: 24px;
-		   -moz-padding-start: 24px;
-						padding-start: 24px;
-	}
+  &, .tree {
+    list-style: none;
+    margin: 0 0 0 24px;
+    padding: 0;
+  }
 
-	.folder {
-		display: inline-block;
-		width: 100%;
-		text-decoration: none;
-		line-height: 24px;
-		color: #4298ba;
+  .folder {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    line-height: 24px;
+    color: #4298ba;
 
-		.fa {
-			width: 16px;
-			font-size: 16px;
-		}
+    .fa {
+      width: 16px;
+      font-size: 16px;
+    }
 
-		.name {
-			margin-left: 4px;
-			font-size: 14px;
-		}
+    .name {
+      margin-left: 4px;
+      font-size: 14px;
+    }
 
-		&.empty .fa { margin-left: 20px; }
-
-		&.selected {
-			background-color: #E3F2FE;
-			.name { color: #333; }
-		}
-	}
+    &.empty .fa { margin-left: 20px; }
+    &.selected .name { color: #333; }
+  }
 }

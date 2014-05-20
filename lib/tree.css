@@ -1,8 +1,7 @@
 .simple-tree, .simple-tree .tree {
   list-style: none;
-  -webkit-padding-start: 24px;
-  -moz-padding-start: 24px;
-  padding-start: 24px;
+  margin: 0 0 0 24px;
+  padding: 0;
 }
 .simple-tree .folder {
   display: inline-block;
@@ -21,9 +20,6 @@
 }
 .simple-tree .folder.empty .fa {
   margin-left: 20px;
-}
-.simple-tree .folder.selected {
-  background-color: #E3F2FE;
 }
 .simple-tree .folder.selected .name {
   color: #333;
