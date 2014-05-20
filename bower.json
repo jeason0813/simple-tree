@@ -1,0 +1,30 @@
+{
+  "name": "simple-tree",
+  "version": "1.0.0",
+  "homepage": "https://github.com/mycolorway/simple-tree",
+  "authors": [
+    "kshift <kshift.lv@gmail.com>"
+  ],
+  "description": "a simple tree plugin",
+  "main": "lib/tree.js",
+  "keywords": [
+    "tree"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor",
+    "Gemfile",
+    "Gemfile.lock",
+    "Gruntfile.coffee",
+    "package.json",
+    "README"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "fontawesome": "~4.0.3",
+    "simple-module": "~1.0.0",
+    "simple-util": "~1.0.0"
+  }
+}

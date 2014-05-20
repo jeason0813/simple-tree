@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>A simple tree plugin</title>
+	<meta charset="utf-8" />
+
+	<link media="all" rel="stylesheet" type="text/css" href="vendor/bower/fontawesome/css/font-awesome.min.css" />
+	<link media="all" rel="stylesheet" type="text/css" href="lib/tree.css" />
+	<style type="text/css" media="all">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.container.workspace {
+			width: 860px;
+			height: 100%;
+			margin: auto;
+		}
+
+		.demo {
+			width: 400px;
+			height: 200px;
+			border: 1px solid #777;
+			margin: 100px auto;
+		}
+	</style>
+
+	<script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
+	<script type="text/javascript" src="vendor/bower/simple-util/lib/util.js"></script>
+	<script type="text/javascript" src="lib/tree.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var data = [{
+				label: "一级目录1号",
+				children: [{
+					label: "二级目录1号"
+				}, {
+					label: "二级目录2号",
+					children: [{
+						label: "三级目录1号"
+					}]
+				}]
+			}, {
+				label: "一级目录2号"
+			}];
+
+				simple.tree({
+					el: $(".demo"),
+					content: data
+				})
+		});
+	</script>
+
+</head>
+<body>
+	<div class="container workspace">
+		<div class="demo"></div>
+	</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-simple-treeview
-===============
+simple-tree
+===========
 
-a simple treeview plugin
+a simple tree plugin
