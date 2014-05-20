@@ -56,11 +56,11 @@ class Tree extends Widget
       folder = $(e.currentTarget)
       treeEl = folder.next(".tree")
 
-      if target.is(".fa") and not folder.is(".empty")
+      if target.is(".fa") and treeEl.length
         treeEl.toggle()
-        folder.find(".fa-caret-down, .fa-caret-right")
+        folder.find(".fa:first")
           .toggleClass("fa-caret-down").toggleClass("fa-caret-right")
-          .end().find(".fa-folder-open-o, .fa-folder-o")
+          .end().find(".fa:last")
           .toggleClass("fa-folder-open-o").toggleClass("fa-folder-o")
 
       else
@@ -69,7 +69,7 @@ class Tree extends Widget
 
 
   _unbind: () ->
-    @tree.find(".folder").off(".simple-popover")
+    @tree.find(".folder").off(".simple-tree")
 
 
   _createTree: (el, content) ->
