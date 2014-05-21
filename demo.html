@@ -51,6 +51,7 @@
 
 			var tree = simple.tree({
 				el: "#tree",
+				expand: true,
 				items: data,
 				onNodeRender: function($node, item) {
 					$node.find('.icon').after('<i class="icon-folder fa fa-folder"/>');

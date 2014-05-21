@@ -1,9 +1,11 @@
 .simple-tree ul {
   list-style: none;
+  display: none;
   margin: 2px 0 0 18px;
   padding: 0;
 }
 .simple-tree ul.tree {
+  display: block;
   margin: 0;
 }
 .simple-tree .node {

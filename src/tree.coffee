@@ -2,6 +2,7 @@ class Tree extends Widget
   opts:
     el: null
     items: null
+    expand: false
     onNodeRender: $.noop
 
 
@@ -12,6 +13,7 @@ class Tree extends Widget
         <a href="javascript:;" class="label"><span></span></a>
       </li>
     """
+
 
   _init: () ->
     unless @opts.el
@@ -24,6 +26,7 @@ class Tree extends Widget
 
     @_render()
 
+
   _render: () ->
     createTree = ($list, items) =>
       for item in items
@@ -34,8 +37,13 @@ class Tree extends Widget
         @opts.onNodeRender.call(@, $nodeEl, item) if $.isFunction @opts.onNodeRender
 
         if item.children
-          $nodeEl.find(".icon").addClass("fa-caret-down")
+          expand = if item.expand? then item.expand else @opts.expand
           $treeEl = $('<ul/>').appendTo $nodeEl
+          if expand
+            $nodeEl.find(".icon").addClass "fa-caret-down"
+            $treeEl.show()
+          else
+            $nodeEl.find(".icon").addClass "fa-caret-right"
           createTree $treeEl, item.children
         else
           $nodeEl.find(".icon").remove()
@@ -58,6 +66,7 @@ class Tree extends Widget
         @tree.find(".node.selected").removeClass "selected"
         $nodeEl = $(e.currentTarget).parent("li").addClass "selected"
         @trigger "nodeselected", [$nodeEl, $nodeEl.data('node')]
+
 
   destroy: ->
     @tree.remove()

@@ -41,7 +41,10 @@ module.exports = (grunt) ->
         src: ['lib/tree.js']
         options:
           outfile: 'spec/index.html'
-          styles: 'lib/tree.css'
+          styles: [
+            'lib/tree.css',
+            'vendor/bower/fontawesome/css/font-awesome.min.css'
+          ]
           specs: 'spec/tree-spec.js'
           vendor: [
             'vendor/bower/jquery/dist/jquery.min.js',
