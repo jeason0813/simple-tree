@@ -9,9 +9,7 @@
     padding: 0;
   }
 
-  .leaf {
-    &.empty { margin-left: 28px; }
-
+  .node {
     a {
       text-decoration: none;
       line-height: 22px;
@@ -25,10 +23,9 @@
       text-align: center;
     }
 
+    .label { font-size: 14px; }
+    &.leaf { margin-left: 28px; }
     &.selected > .label { color: #333; }
-    .label {
-      font-size: 14px;
-    }
   }
 
   .folder {
@@ -45,6 +42,6 @@
        -moz-osx-font-smoothing: grayscale;
     }
     &.off > .label:before { content: "\f114"; }
-    &.empty > .label:before { content: "\f114"; }
+    &.leaf > .label:before { content: "\f114"; }
   }
 }

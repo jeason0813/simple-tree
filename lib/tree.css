@@ -8,25 +8,25 @@
   margin: 0 0 0 24px;
   padding: 0;
 }
-.simple-tree .leaf.empty {
-  margin-left: 28px;
-}
-.simple-tree .leaf a {
+.simple-tree .node a {
   text-decoration: none;
   line-height: 22px;
   color: #4298ba;
 }
-.simple-tree .leaf .fa {
+.simple-tree .node .fa {
   width: 16px;
   padding: 0 4px;
   font-size: 16px;
   text-align: center;
 }
-.simple-tree .leaf.selected > .label {
-  color: #333;
-}
-.simple-tree .leaf .label {
+.simple-tree .node .label {
   font-size: 14px;
+}
+.simple-tree .node.leaf {
+  margin-left: 28px;
+}
+.simple-tree .node.selected > .label {
+  color: #333;
 }
 .simple-tree .folder > .label:before {
   content: "\f115";
@@ -43,6 +43,6 @@
 .simple-tree .folder.off > .label:before {
   content: "\f114";
 }
-.simple-tree .folder.empty > .label:before {
+.simple-tree .folder.leaf > .label:before {
   content: "\f114";
 }

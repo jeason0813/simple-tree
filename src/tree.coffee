@@ -6,10 +6,10 @@ class Tree extends Widget
 
 
   @_tpl:
-    leaf: """
-      <li class="leaf">
+    node: """
+      <li class="node">
         <a href="javascript:;" class="icon fa"></a>
-        <a href="javascript:;" class="label"></a>
+        <a href="javascript:;" class="label"><span></span></a>
       </li>
     """
 
@@ -24,35 +24,36 @@ class Tree extends Widget
 
   _render: () ->
     createTree = (el, items) =>
-      for leaf in items
-        leafEl = $(Tree._tpl.leaf)
-          .find(".label").text(leaf.label)
+      for item in items
+        nodeEl = $(Tree._tpl.node)
+          .find(".label span").text(item.label)
           .end().appendTo(el)
 
-        leafEl.data("leaf", leaf)
-        leafEl.addClass("folder") if @opts.isFolder
-        if leaf.children
-          leafEl.find(".fa").addClass("fa-caret-down")
-          treeEl = $('<ul class="tree">').appendTo leafEl
-          createTree treeEl, leaf.children
+        nodeEl.data("node", item)
+        nodeEl.addClass("folder") if @opts.isFolder
+        if item.children
+          nodeEl.find(".fa").addClass("fa-caret-down")
+          treeEl = $('<ul class="tree">').appendTo nodeEl
+          createTree treeEl, item.children
         else
-          leafEl.find(".fa").remove()
-          leafEl.addClass("empty")
+          nodeEl.find(".fa").remove()
+          nodeEl.addClass("leaf")
 
     @tree = $('<ul class="tree simple-tree">')
     createTree @tree, @opts.items
-    @tree.appendTo @opts.el
+    @opts.el.addClass("simple-tree").append(@tree)
 
     @tree.find(".icon").on "click.simple-tree", (e) =>
       e.preventDefault()
       $(e.currentTarget).siblings(".tree").toggle()
-        .end().toggleClass("fa-caret-down")
+        .end()
+        .toggleClass("fa-caret-down")
         .toggleClass("fa-caret-right")
         .parent().toggleClass("off")
 
     @tree.find(".label").on "click.simple-tree", (e) =>
         e.preventDefault()
-        @tree.find(".leaf.selected").removeClass "selected"
+        @tree.find(".node.selected").removeClass "selected"
         $(e.currentTarget).parent().addClass "selected"
         @tree.trigger "selected.simple-tree"
 
