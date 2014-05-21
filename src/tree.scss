@@ -1,47 +1,46 @@
 .simple-tree {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
 
-  &.tree, .tree {
-    list-style: none;
-    margin: 0 0 0 24px;
-    padding: 0;
-  }
+	ul {
+		list-style: none;
+		margin: 2px 0 0 18px;
+		padding: 0;
 
-  .node {
-    a {
-      text-decoration: none;
-      line-height: 22px;
-      color: #4298ba;
-    }
+		&.tree {
+			margin: 0;
+		}
+	}
 
-    .fa {
-      width: 16px;
-      padding: 0 4px;
-      font-size: 16px;
-      text-align: center;
-    }
+	.node {
+		margin: 0 0 2px 0;
 
-    .label { font-size: 14px; }
-    &.leaf { margin-left: 28px; }
-    &.selected > .label { color: #333; }
-  }
+		a {
+			color: #666666;
+			text-decoration: none;
+			line-height: 22px;
 
-  .folder {
-    & > .label:before {
-      content: "\f115";
-      display: inline-block;
-      margin-right: 4px;
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 1;
-      -webkit-font-smoothing: antialiased;
-       -moz-osx-font-smoothing: grayscale;
-    }
-    &.off > .label:before { content: "\f114"; }
-    &.leaf > .label:before { content: "\f114"; }
-  }
+			&:hover {
+				color: #999999;
+			}
+		}
+
+		.icon {
+			width: 16px;
+			padding: 0 4px;
+			font-size: 16px;
+			text-align: center;
+		}
+
+		.label {
+			font-size: 14px;
+		}
+
+		&.leaf {
+			margin-left: 24px;
+		}
+
+		&.selected > .label {
+			color: #000000;
+			font-weight: bold;
+		}
+	}
 }

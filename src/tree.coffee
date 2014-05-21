@@ -1,8 +1,8 @@
 class Tree extends Widget
   opts:
-    el:       null
-    items:    null
-    isFolder: false
+    el: null
+    items: null
+    onNodeRender: $.noop
 
 
   @_tpl:
@@ -13,55 +13,56 @@ class Tree extends Widget
       </li>
     """
 
-
   _init: () ->
-    if @opts.el is null or @opts.items is null
-      throw "[Tree] - 内容不能为空"
+    unless @opts.el
+      throw "simple tree: option el is required"
+      return
+
+    unless @opts.items
+      throw "simple tree: option items is required"
+      return
 
     @_render()
-    @tree.data "tree", @
-
 
   _render: () ->
-    createTree = (el, items) =>
+    createTree = ($list, items) =>
       for item in items
-        nodeEl = $(Tree._tpl.node)
-          .find(".label span").text(item.label)
-          .end().appendTo(el)
+        $nodeEl = $(Tree._tpl.node).data("node", item)
+        $nodeEl.find(".label span").text(item.label)
 
-        nodeEl.data("node", item)
-        nodeEl.addClass("folder") if @opts.isFolder
+        $list.append $nodeEl
+        @opts.onNodeRender.call(@, $nodeEl, item) if $.isFunction @opts.onNodeRender
+
         if item.children
-          nodeEl.find(".fa").addClass("fa-caret-down")
-          treeEl = $('<ul class="tree">').appendTo nodeEl
-          createTree treeEl, item.children
+          $nodeEl.find(".icon").addClass("fa-caret-down")
+          $treeEl = $('<ul/>').appendTo $nodeEl
+          createTree $treeEl, item.children
         else
-          nodeEl.find(".fa").remove()
-          nodeEl.addClass("leaf")
+          $nodeEl.find(".icon").remove()
+          $nodeEl.addClass("leaf")
 
-    @tree = $('<ul class="tree simple-tree">')
+    @el = $(@opts.el).addClass("simple-tree").data("tree", @)
+    @tree = $('<ul class="tree">').appendTo(@el)
     createTree @tree, @opts.items
-    @opts.el.addClass("simple-tree").append(@tree)
 
-    @tree.find(".icon").on "click.simple-tree", (e) =>
+    @tree.on "click.simple-tree", ".node .icon", (e) =>
       e.preventDefault()
-      $(e.currentTarget).siblings(".tree").toggle()
+      $(e.currentTarget).siblings("ul").toggle()
         .end()
         .toggleClass("fa-caret-down")
         .toggleClass("fa-caret-right")
-        .parent().toggleClass("off")
+        .parent(".node").toggleClass("off")
 
-    @tree.find(".label").on "click.simple-tree", (e) =>
+    @tree.on "click.simple-tree", ".node .label", (e) =>
         e.preventDefault()
         @tree.find(".node.selected").removeClass "selected"
-        $(e.currentTarget).parent().addClass "selected"
-        @tree.trigger "selected.simple-tree"
-
+        $nodeEl = $(e.currentTarget).parent("li").addClass "selected"
+        @trigger "nodeselected", [$nodeEl, $nodeEl.data('node')]
 
   destroy: ->
-    @tree.find(".icon").off(".simple-tree")
-    @tree.find(".label").off(".simple-tree")
     @tree.remove()
+    @el.removeClass("simple-tree")
+      .removeData("tree")
 
 
 @simple ||= {}

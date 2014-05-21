@@ -12,23 +12,26 @@
 			padding: 0;
 		}
 
-		.container.workspace {
-			width: 860px;
-			height: 100%;
-			margin: auto;
+		#tree {
+			margin: 40px 0 40px 20px;
 		}
 
-		.demo {
-			width: 400px;
-			height: 200px;
-			border: 1px solid #777;
-			margin: 100px auto;
+		#tree .icon-folder {
+			display: inline-block;
+			margin-right: 4px;
+			font-size: 14px;
+			color: #cccccc;
+		}
+
+		#console {
+			padding: 20px 0 0 20px;
+			border-top: 1px solid #cccccc;
+			line-height: 2;
 		}
 	</style>
 
 	<script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
-	<script type="text/javascript" src="vendor/bower/simple-util/lib/util.js"></script>
 	<script type="text/javascript" src="lib/tree.js"></script>
 	<script type="text/javascript">
 		$(function() {
@@ -46,18 +49,26 @@
 				label: "一级目录2号"
 			}];
 
-				simple.tree({
-					el: $(".demo"),
-					items: data,
-					isFolder: true
-				})
+			var tree = simple.tree({
+				el: "#tree",
+				items: data,
+				onNodeRender: function($node, item) {
+					$node.find('.icon').after('<i class="icon-folder fa fa-folder"/>');
+				}
+			});
+
+			tree.on("nodeselected", function(e, $node, item) {
+				$('#console').prepend('select node: ' + item.label + '<br/>');
+			});
 		});
 	</script>
 
 </head>
 <body>
-	<div class="container workspace">
-		<div class="demo"></div>
+	<div class="wrapper">
+		<div id="tree"></div>
+
+		<div id="console"></div>
 	</div>
 </body>
 </html>

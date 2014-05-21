@@ -1,19 +1,23 @@
-.simple-tree {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-.simple-tree.tree, .simple-tree .tree {
+.simple-tree ul {
   list-style: none;
-  margin: 0 0 0 24px;
+  margin: 2px 0 0 18px;
   padding: 0;
 }
+.simple-tree ul.tree {
+  margin: 0;
+}
+.simple-tree .node {
+  margin: 0 0 2px 0;
+}
 .simple-tree .node a {
+  color: #666666;
   text-decoration: none;
   line-height: 22px;
-  color: #4298ba;
 }
-.simple-tree .node .fa {
+.simple-tree .node a:hover {
+  color: #999999;
+}
+.simple-tree .node .icon {
   width: 16px;
   padding: 0 4px;
   font-size: 16px;
@@ -23,26 +27,9 @@
   font-size: 14px;
 }
 .simple-tree .node.leaf {
-  margin-left: 28px;
+  margin-left: 24px;
 }
 .simple-tree .node.selected > .label {
-  color: #333;
-}
-.simple-tree .folder > .label:before {
-  content: "\f115";
-  display: inline-block;
-  margin-right: 4px;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.simple-tree .folder.off > .label:before {
-  content: "\f114";
-}
-.simple-tree .folder.leaf > .label:before {
-  content: "\f114";
+  color: #000000;
+  font-weight: bold;
 }
