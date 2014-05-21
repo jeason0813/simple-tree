@@ -1,26 +1,48 @@
-.simple-tree, .simple-tree .tree {
+.simple-tree {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.simple-tree.tree, .simple-tree .tree {
   list-style: none;
   margin: 0 0 0 24px;
   padding: 0;
 }
-.simple-tree .folder {
-  display: inline-block;
-  width: 100%;
+.simple-tree .leaf.empty {
+  margin-left: 28px;
+}
+.simple-tree .leaf a {
   text-decoration: none;
-  line-height: 24px;
+  line-height: 22px;
   color: #4298ba;
 }
-.simple-tree .folder .fa {
+.simple-tree .leaf .fa {
   width: 16px;
+  padding: 0 4px;
   font-size: 16px;
+  text-align: center;
 }
-.simple-tree .folder .name {
-  margin-left: 4px;
+.simple-tree .leaf.selected > .label {
+  color: #333;
+}
+.simple-tree .leaf .label {
   font-size: 14px;
 }
-.simple-tree .folder.empty .fa {
-  margin-left: 20px;
+.simple-tree .folder > .label:before {
+  content: "\f115";
+  display: inline-block;
+  margin-right: 4px;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-.simple-tree .folder.selected .name {
-  color: #333;
+.simple-tree .folder.off > .label:before {
+  content: "\f114";
+}
+.simple-tree .folder.empty > .label:before {
+  content: "\f114";
 }

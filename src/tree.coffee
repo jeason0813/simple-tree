@@ -1,97 +1,65 @@
 class Tree extends Widget
   opts:
-    el:      null
-    content: null
+    el:       null
+    items:    null
+    isFolder: false
 
 
   @_tpl:
-    tree: """
-      <ul class="tree"></ul>
-    """
-
-    folder: """
-      <li>
-        <a href="javascript:;" class="folder">
-          <i class="fa fa-caret-down"></i>
-          <i class="fa fa-folder-open-o"></i>
-          <span class="name"></span>
-        </a>
-      </li>
-    """
-
-    folderEmpty: """
-      <li>
-        <a href="javascript:;" class="folder empty">
-          <i class="fa fa-folder-o"></i>
-          <span class="name"></span>
-        </a>
+    leaf: """
+      <li class="leaf">
+        <a href="javascript:;" class="icon fa"></a>
+        <a href="javascript:;" class="label"></a>
       </li>
     """
 
 
   _init: () ->
-    if @opts.el is null or @opts.content is null
+    if @opts.el is null or @opts.items is null
       throw "[Tree] - 内容不能为空"
 
-    $(".simple-tree").each () ->
-      $(@).data("tree").destroy()
-
     @_render()
-    @_bind()
     @tree.data "tree", @
 
 
   _render: () ->
-    @el   = @opts.el
-    @tree = $(Tree._tpl.tree).addClass "simple-tree"
+    createTree = (el, items) =>
+      for leaf in items
+        leafEl = $(Tree._tpl.leaf)
+          .find(".label").text(leaf.label)
+          .end().appendTo(el)
 
-    @_createTree @tree, @opts.content
-    @tree.appendTo @el
+        leafEl.data("leaf", leaf)
+        leafEl.addClass("folder") if @opts.isFolder
+        if leaf.children
+          leafEl.find(".fa").addClass("fa-caret-down")
+          treeEl = $('<ul class="tree">').appendTo leafEl
+          createTree treeEl, leaf.children
+        else
+          leafEl.find(".fa").remove()
+          leafEl.addClass("empty")
 
+    @tree = $('<ul class="tree simple-tree">')
+    createTree @tree, @opts.items
+    @tree.appendTo @opts.el
 
-  _bind: () ->
-    @tree.find(".folder").on "click.simple-tree", (e) =>
+    @tree.find(".icon").on "click.simple-tree", (e) =>
       e.preventDefault()
-      target = $(e.target)
-      folder = $(e.currentTarget)
-      treeEl = folder.next(".tree")
+      $(e.currentTarget).siblings(".tree").toggle()
+        .end().toggleClass("fa-caret-down")
+        .toggleClass("fa-caret-right")
+        .parent().toggleClass("off")
 
-      if target.is(".fa") and treeEl.length
-        treeEl.toggle()
-        folder.find(".fa:first")
-          .toggleClass("fa-caret-down").toggleClass("fa-caret-right")
-          .end().find(".fa:last")
-          .toggleClass("fa-folder-open-o").toggleClass("fa-folder-o")
-
-      else
-        @tree.find(".folder.selected").removeClass "selected"
-        folder.addClass "selected"
-
-
-  _unbind: () ->
-    @tree.find(".folder").off(".simple-tree")
-
-
-  _createTree: (el, content) ->
-    for folder in content
-      if folder.children
-        folderEl = $(Tree._tpl.folder)
-          .find(".name")
-          .text(folder.label)
-          .end().appendTo(el)
-
-        treeEl = $(Tree._tpl.tree).appendTo folderEl
-        @_createTree treeEl, folder.children
-
-      else
-        folderEl = $(Tree._tpl.folderEmpty)
-          .find(".name")
-          .text(folder.label)
-          .end().appendTo(el)
+    @tree.find(".label").on "click.simple-tree", (e) =>
+        e.preventDefault()
+        @tree.find(".leaf.selected").removeClass "selected"
+        $(e.currentTarget).parent().addClass "selected"
+        @tree.trigger "selected.simple-tree"
 
 
   destroy: ->
-    @_unbind()
+    @tree.find(".icon").off(".simple-tree")
+    @tree.find(".label").off(".simple-tree")
     @tree.remove()
 
 
