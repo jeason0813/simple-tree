@@ -97,7 +97,7 @@
         el: "#tree",
         items: data
       });
-      $(".simple-tree .tree .icon:first").click();
+      $(".simple-tree .tree .toggle:first").click();
       return expect($(".simple-tree .tree ul:first").is(":visible")).toEqual(true);
     });
     return it("shuld destroy when call destroy()", function() {

@@ -83,7 +83,7 @@ describe "simple tree", ->
     simple.tree
       el: "#tree"
       items: data
-    $(".simple-tree .tree .icon:first").click()
+    $(".simple-tree .tree .toggle:first").click()
     expect($(".simple-tree .tree ul:first").is(":visible")).toEqual(true)
 
   it "shuld destroy when call destroy()", ->

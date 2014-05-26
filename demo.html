@@ -12,11 +12,12 @@
 			padding: 0;
 		}
 
-		#tree {
+		#tree-one, #tree-two {
 			margin: 40px 0 40px 20px;
 		}
 
-		#tree .icon-folder {
+		#tree-one  .icon-folder,
+		#tree-two .icon-folder {
 			display: inline-block;
 			margin-right: 4px;
 			font-size: 14px;
@@ -36,30 +37,38 @@
 	<script type="text/javascript">
 		$(function() {
 			var data = [{
-				label: "一级目录1号",
+				name: "一级目录1号",
 				children: [{
-					label: "二级目录1号"
+					name: "二级目录1号"
 				}, {
-					label: "二级目录2号",
+					name: "二级目录2号",
 					children: [{
-						label: "三级目录1号"
+						name: "三级目录1号"
 					}]
 				}]
 			}, {
-				label: "一级目录2号"
+				name: "一级目录2号"
 			}];
 
 			var tree = simple.tree({
-				el: "#tree",
+				el: "#tree-one",
 				expand: true,
 				items: data,
 				onNodeRender: function($node, item) {
-					$node.find('.icon').after('<i class="icon-folder fa fa-folder"/>');
+					$node.find('.toggle').after('<i class="icon-folder fa fa-folder"/>');
 				}
 			});
 
-			tree.on("nodeselected", function(e, $node, item) {
-				$('#console').prepend('select node: ' + item.label + '<br/>');
+			$(document).on("nodeselected", ".tree", function(e, $node, item) {
+				$('#console').prepend('select node: ' + item.name + '<br/>');
+			});
+
+			var treeTwo = simple.tree({
+				el: "#tree-two",
+				url: "./demo.json",
+				onNodeRender: function($node, item) {
+					$node.find('.toggle').after('<i class="icon-folder fa fa-folder"/>');
+				}
 			});
 		});
 	</script>
@@ -67,7 +76,8 @@
 </head>
 <body>
 	<div class="wrapper">
-		<div id="tree"></div>
+		<div id="tree-one"></div>
+		<div id="tree-two"></div>
 
 		<div id="console"></div>
 	</div>

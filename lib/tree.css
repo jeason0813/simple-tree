@@ -19,19 +19,19 @@
 .simple-tree .node a:hover {
   color: #999999;
 }
-.simple-tree .node .icon {
+.simple-tree .node .toggle {
   width: 16px;
-  padding: 0 4px;
+  padding-right: 4px;
   font-size: 16px;
   text-align: center;
 }
-.simple-tree .node .label {
+.simple-tree .node .name {
   font-size: 14px;
 }
 .simple-tree .node.leaf {
-  margin-left: 24px;
+  margin-left: 20px;
 }
-.simple-tree .node.selected > .label {
+.simple-tree .node.selected > .name {
   color: #000000;
   font-weight: bold;
 }

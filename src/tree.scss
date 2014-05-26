@@ -2,12 +2,12 @@
 
 	ul {
 		list-style: none;
-    display: none;
+		display: none;
 		margin: 2px 0 0 18px;
 		padding: 0;
 
 		&.tree {
-      display: block;
+			display: block;
 			margin: 0;
 		}
 	}
@@ -25,22 +25,22 @@
 			}
 		}
 
-		.icon {
+		.toggle {
 			width: 16px;
-			padding: 0 4px;
+			padding-right: 4px;
 			font-size: 16px;
 			text-align: center;
 		}
 
-		.label {
+		.name {
 			font-size: 14px;
 		}
 
 		&.leaf {
-			margin-left: 24px;
+			margin-left: 20px;
 		}
 
-		&.selected > .label {
+		&.selected > .name {
 			color: #000000;
 			font-weight: bold;
 		}
