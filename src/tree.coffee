@@ -1,8 +1,8 @@
 class Tree extends Widget
   opts:
     el: null
-    items: null
     url: null
+    items: null
     expand: false
     onNodeRender: $.noop
 
@@ -38,9 +38,9 @@ class Tree extends Widget
         type: "get"
         dataType: "json"
         success: (result) =>
-          @createTree @tree, result
+          @createTree @tree, result, @opts.onNodeRender
     else
-      @createTree @tree, @opts.items
+      @createTree @tree, @opts.items, @opts.onNodeRender
 
     @tree.on "click.simple-tree", ".node .toggle", (e) =>
       e.preventDefault()
@@ -56,13 +56,15 @@ class Tree extends Widget
         $nodeEl = $(e.currentTarget).parent("li").addClass "selected"
         @tree.trigger "nodeselected", [$nodeEl, $nodeEl.data('node')]
 
-  createTree: ($list, items) ->
+  createTree: ($list, items, callback) ->
+    return false  if $list is null or items is null
+
     for item in items
       $nodeEl = $(Tree._tpl.node).data("node", item)
       $nodeEl.find(".name span").text(item.name)
 
       $list.append $nodeEl
-      @opts.onNodeRender.call(@, $nodeEl, item) if $.isFunction @opts.onNodeRender
+      callback.call(@, $nodeEl, item) if $.isFunction callback
 
       if item.children
         expand = if item.expand? then item.expand else @opts.expand
