@@ -3,7 +3,7 @@
 	ul {
 		list-style: none;
 		display: none;
-		margin: 2px 0 0 18px;
+		margin: 2px 0 0 20px;
 		padding: 0;
 
 		&.tree {
@@ -32,15 +32,22 @@
 			text-align: center;
 		}
 
-		.name {
+		.label {
 			font-size: 14px;
+		}
+
+		&.loading {
+			margin: 10px 0;
+			font-size: 14px;
+			line-height: 22px;
+			color: #666666;
 		}
 
 		&.leaf {
 			margin-left: 20px;
 		}
 
-		&.selected > .name {
+		&.selected > .label {
 			color: #000000;
 			font-weight: bold;
 		}

@@ -1,7 +1,7 @@
 .simple-tree ul {
   list-style: none;
   display: none;
-  margin: 2px 0 0 18px;
+  margin: 2px 0 0 20px;
   padding: 0;
 }
 .simple-tree ul.tree {
@@ -25,13 +25,19 @@
   font-size: 16px;
   text-align: center;
 }
-.simple-tree .node .name {
+.simple-tree .node .label {
   font-size: 14px;
+}
+.simple-tree .node.loading {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
 }
 .simple-tree .node.leaf {
   margin-left: 20px;
 }
-.simple-tree .node.selected > .name {
+.simple-tree .node.selected > .label {
   color: #000000;
   font-weight: bold;
 }
