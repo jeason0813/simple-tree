@@ -5,6 +5,7 @@ class Tree extends Widget
     items: null
     expand: false
     onNodeRender: $.noop
+    selected: false
     nodeProperties: {}
 
   properties:
@@ -53,8 +54,10 @@ class Tree extends Widget
         dataType: "json"
         success: (result) =>
           @_renderTree @tree, result
+          @select @opts.selected if @opts.selected
     else
       @_renderTree @tree, @opts.items
+      @select @opts.selected if @opts.selected
 
     @_bind()
 
@@ -116,6 +119,7 @@ class Tree extends Widget
         e.preventDefault()
         $node = $(e.currentTarget).closest('.node')
         @select $node
+        @tree.trigger "nodeselected", [$node, $node.data("node")]
 
 
   refresh: (opts) ->
@@ -126,10 +130,11 @@ class Tree extends Widget
 
   select: ($node) ->
     if $node
-      $node = @tree.find('.node[data-id=' + $node ']') unless typeof $node is 'object'
+      $node = @tree.find('.node[data-id=' + $node + ']') unless typeof $node is 'object'
+      return unless $node.length > 0
+
       @tree.find('.node.selected').removeClass('selected')
       $node.addClass('selected')
-      @tree.trigger "nodeselected", [$node, $node.data("node")]
     else
       $node = @tree.find('.node.selected')
 
@@ -148,3 +153,5 @@ $.extend(@simple, {
   tree: (opts) ->
     return new Tree opts
 })
+
+
