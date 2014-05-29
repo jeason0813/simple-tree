@@ -4,20 +4,27 @@ class Tree extends Widget
     url: null
     items: null
     expand: false
-    loading: false
     onNodeRender: $.noop
     nodeProperties: {}
 
   properties:
-    label: "label"
+    id: 'id'
+    label: "name"
     children: "children"
     params: {}
 
   @_tpl:
+    list: """
+      <ul>
+        <li class="node loading">正在加载...</li>
+      </ul>
+    """
     node: """
       <li class="node">
-        <a href="javascript:;" class="toggle fa"></a>
-        <a href="javascript:;" class="label"><span></span></a>
+        <div class="node-content">
+          <a href="javascript:;" class="toggle fa"></a>
+          <a href="javascript:;" class="label"><span></span></a>
+        </div>
       </li>
     """
 
@@ -28,7 +35,7 @@ class Tree extends Widget
       return
 
     unless @opts.items or @opts.url
-      throw "simple tree: option items is required"
+      throw "simple tree: option items or url is required"
       return
 
     $.extend @properties, @opts.nodeProperties
@@ -37,8 +44,7 @@ class Tree extends Widget
 
   _render: () ->
     @el = $(@opts.el).addClass("simple-tree").data("tree", @)
-    @tree = $('<ul class="tree">').appendTo(@el)
-    @loading = $('<li class="node loading">正在加载...</li>').appendTo(@tree)  if @opts.loading
+    @tree = $(Tree._tpl.list).addClass('tree').appendTo(@el)
 
     if @opts.url
       $.ajax
@@ -46,45 +52,23 @@ class Tree extends Widget
         type: "get"
         dataType: "json"
         success: (result) =>
-          @_createTree @tree, result
+          @_renderTree @tree, result
     else
-      @_createTree @tree, @opts.items
+      @_renderTree @tree, @opts.items
 
-    @tree.on "click.simple-tree", ".node .toggle", (e) =>
-      e.preventDefault()
-      $list = $(e.currentTarget).siblings("ul")
-      $node = $list.parent()
-
-      if $list?.is ":empty"
-        $.ajax
-          url: @opts.url
-          type: "get"
-          dataType: "json"
-          data: $.extend {}, $node.data("node").params
-          success: (result) =>
-            @_createTree $list, result
-
-      $node.toggleClass("off")
-      $list.toggle()
-        .end()
-        .toggleClass("fa-caret-down")
-        .toggleClass("fa-caret-right")
-
-    @tree.on "click.simple-tree", ".node .label", (e) =>
-        e.preventDefault()
-        @tree.find(".node.selected").removeClass "selected"
-        $nodeEl = $(e.currentTarget).parent("li").addClass "selected"
-        @tree.trigger "nodeselected", [$nodeEl, $nodeEl.data("node")]
+    @_bind()
 
 
-  _createTree: ($list, items) ->
-    @loading.remove()  if @loading?.length
-    return false  if $list is null or items is null
+  _renderTree: ($list, items) ->
+    return false unless $list and items
+    $list.empty()
 
     for item in items
       item.params = {}
-      item.params[key] = item[value]  for key, value of @properties.params
-      $nodeEl = $(Tree._tpl.node).data("node", item)
+      item.params[key] = item[value] for key, value of @properties.params
+      $nodeEl = $(Tree._tpl.node)
+        .data("node", item)
+        .attr('data-id', item[@properties.id])
       $nodeEl.find(".label span").text(item[@properties.label])
 
       $list.append $nodeEl
@@ -92,22 +76,64 @@ class Tree extends Widget
 
       if item[@properties.children]
         expand = if item.expand? then item.expand else @opts.expand
-        $treeEl = $("<ul/>").appendTo $nodeEl
-        if expand
-          $nodeEl.find(".toggle").addClass "fa-caret-down"
-          $treeEl.show()
+        isArray = $.isArray item[@properties.children]
+        $listEl = $(Tree._tpl.list).appendTo $nodeEl
+        if expand and isArray
+          $nodeEl.addClass('expand')
+            .find(".toggle").addClass "fa-caret-down"
         else
           $nodeEl.find(".toggle").addClass "fa-caret-right"
-        @_createTree $treeEl, item[@properties.children]  if $.isArray item[@properties.children]
+
+        @_renderTree $listEl, item[@properties.children] if isArray
       else
         $nodeEl.find(".toggle").remove()
         $nodeEl.addClass("leaf")
+
+
+  _bind: ->
+    @tree.on "click.simple-tree", ".node .toggle", (e) =>
+      e.preventDefault()
+      $toggle = $(e.currentTarget)
+      $node = $toggle.closest('.node')
+      $list = $node.find('> ul')
+      item = $node.data('node')
+
+      $node.toggleClass('expand')
+      $toggle.toggleClass('fa-caret-right')
+        .toggleClass('fa-caret-down')
+
+      unless $.isArray item[@properties.children]
+        $.ajax
+          url: @opts.url
+          type: "get"
+          dataType: "json"
+          data: $.extend {}, $node.data("node").params
+          success: (result) =>
+            item[@properties.children] = result
+            @_renderTree $list, result
+
+    @tree.on "click.simple-tree", ".node .label", (e) =>
+        e.preventDefault()
+        $node = $(e.currentTarget).closest('.node')
+        @select $node
 
 
   refresh: (opts) ->
     $.extend @opts, opts
     @destroy()
     @_render()
+
+
+  select: ($node) ->
+    if $node
+      $node = @tree.find('.node[data-id=' + $node ']') unless typeof $node is 'object'
+      @tree.find('.node.selected').removeClass('selected')
+      $node.addClass('selected')
+      @tree.trigger "nodeselected", [$node, $node.data("node")]
+    else
+      $node = @tree.find('.node.selected')
+
+    $node
 
 
   destroy: ->
@@ -119,8 +145,6 @@ class Tree extends Widget
 @simple ||= {}
 
 $.extend(@simple, {
-
   tree: (opts) ->
     return new Tree opts
-
 })

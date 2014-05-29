@@ -1,11 +1,9 @@
 .simple-tree ul {
   list-style: none;
-  display: none;
   margin: 2px 0 0 20px;
   padding: 0;
 }
 .simple-tree ul.tree {
-  display: block;
   margin: 0;
 }
 .simple-tree .node {
@@ -28,16 +26,22 @@
 .simple-tree .node .label {
   font-size: 14px;
 }
+.simple-tree .node > ul {
+  display: none;
+}
+.simple-tree .node.expand > ul {
+  display: block;
+}
 .simple-tree .node.loading {
-  margin: 10px 0;
+  margin: 2px 0 2px 20px;
   font-size: 14px;
   line-height: 22px;
-  color: #666666;
+  color: #aaaaaa;
 }
 .simple-tree .node.leaf {
   margin-left: 20px;
 }
-.simple-tree .node.selected > .label {
+.simple-tree .node.selected > .node-content .label {
   color: #000000;
   font-weight: bold;
 }
