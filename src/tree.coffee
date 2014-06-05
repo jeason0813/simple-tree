@@ -119,7 +119,7 @@ class Tree extends Widget
         e.preventDefault()
         $node = $(e.currentTarget).closest('.node')
         @select $node
-        @tree.trigger "nodeselected", [$node, $node.data("node")]
+        @trigger "nodeselected", [$node, $node.data("node")]
 
 
   refresh: (opts) ->
