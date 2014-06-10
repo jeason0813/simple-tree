@@ -49,6 +49,20 @@
 			color: #aaaaaa;
 		}
 
+		&.loading {
+			margin: 0 0 0 5px;
+			font-size: 12px;
+			line-height: 22px;
+			color: #aaaaaa;
+		}
+		
+		&.empty {
+			margin: 0 0 0 5px;
+			font-size: 12px;
+			line-height: 22px;
+			color: #999999;
+		}
+
 		&.leaf {
 			margin-left: 20px;
 		}

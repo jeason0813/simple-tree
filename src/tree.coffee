@@ -7,6 +7,7 @@ class Tree extends Widget
     onNodeRender: $.noop
     selected: false
     nodeProperties: {}
+    placeholder: 'No data...'
 
   properties:
     id: 'id'
@@ -53,8 +54,13 @@ class Tree extends Widget
         type: "get"
         dataType: "json"
         success: (result) =>
-          @_renderTree @tree, result
-          @select @opts.selected if @opts.selected
+          if result.length < 1
+            @tree.empty().append('<li class="node empty">' + @opts.placeholder + '</li>')
+          else
+            @_renderTree @tree, result
+            @select @opts.selected if @opts.selected
+    else if @opts.items.length < 1
+      @tree.empty().append('<li class="node empty">' + @opts.placeholder + '</li>')
     else
       @_renderTree @tree, @opts.items
       @select @opts.selected if @opts.selected
@@ -153,5 +159,4 @@ $.extend(@simple, {
   tree: (opts) ->
     return new Tree opts
 })
-
 
