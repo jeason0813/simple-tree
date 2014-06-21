@@ -11,8 +11,8 @@
 }
 .simple-tree .node a {
   color: #666666;
+  line-height: 20px;
   text-decoration: none;
-  line-height: 22px;
 }
 .simple-tree .node a:hover {
   color: #999999;
@@ -24,7 +24,10 @@
   text-align: center;
 }
 .simple-tree .node .label {
-  font-size: 14px;
+  font-size: 12px;
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 4px;
 }
 .simple-tree .node > ul {
   display: none;
@@ -33,15 +36,20 @@
   display: block;
 }
 .simple-tree .node.loading {
-  margin: 2px 0 2px 20px;
-  font-size: 14px;
+  margin: 0 0 0 5px;
+  font-size: 12px;
   line-height: 22px;
   color: #aaaaaa;
+}
+.simple-tree .node.empty {
+  margin: 2px 0 2px 20px;
+  font-size: 12px;
+  line-height: 22px;
+  color: #999999;
 }
 .simple-tree .node.leaf {
   margin-left: 20px;
 }
 .simple-tree .node.selected > .node-content .label {
-  color: #000000;
-  font-weight: bold;
+  background: #eeeeee;
 }

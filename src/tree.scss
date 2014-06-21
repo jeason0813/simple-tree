@@ -15,8 +15,8 @@
 
 		a {
 			color: #666666;
+			line-height: 20px;
 			text-decoration: none;
-			line-height: 22px;
 
 			&:hover {
 				color: #999999;
@@ -31,7 +31,10 @@
 		}
 
 		.label {
-			font-size: 14px;
+			font-size: 12px;
+			display: inline-block;
+			padding: 0 4px;
+			border-radius: 4px;
 		}
 
 		& > ul {
@@ -43,21 +46,14 @@
 		}
 
 		&.loading {
-			margin: 2px 0 2px 20px;
-			font-size: 14px;
-			line-height: 22px;
-			color: #aaaaaa;
-		}
-
-		&.loading {
 			margin: 0 0 0 5px;
 			font-size: 12px;
 			line-height: 22px;
 			color: #aaaaaa;
 		}
-		
+
 		&.empty {
-			margin: 0 0 0 5px;
+			margin: 2px 0 2px 20px;
 			font-size: 12px;
 			line-height: 22px;
 			color: #999999;
@@ -68,8 +64,8 @@
 		}
 
 		&.selected > .node-content .label {
-			color: #000000;
-			font-weight: bold;
+			background: #eeeeee;
 		}
 	}
 }
+

@@ -46,7 +46,7 @@ class Tree extends Widget
 
   _render: () ->
     @el = $(@opts.el).addClass("simple-tree").data("tree", @)
-    @tree = $(Tree._tpl.list).addClass('tree').appendTo(@el)
+    @tree = $(Tree._tpl.list).addClass('tree').prependTo(@el)
 
     if @opts.url
       $.ajax
@@ -159,4 +159,3 @@ $.extend(@simple, {
   tree: (opts) ->
     return new Tree opts
 })
-
