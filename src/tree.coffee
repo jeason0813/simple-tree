@@ -1,4 +1,5 @@
-class Tree extends Widget
+class Tree extends SimpleModule
+
   opts:
     el: null
     url: null
@@ -31,7 +32,7 @@ class Tree extends Widget
     """
 
 
-  _init: () ->
+  _init: ->
     unless @opts.el
       throw "simple tree: option el is required"
       return
@@ -44,7 +45,7 @@ class Tree extends Widget
     @_render()
 
 
-  _render: () ->
+  _render: ->
     @el = $(@opts.el).addClass("simple-tree").data("tree", @)
     @tree = $(Tree._tpl.list).addClass('tree').prependTo(@el)
 
@@ -152,10 +153,5 @@ class Tree extends Widget
     @el.removeClass("simple-tree")
       .removeData("tree")
 
-
-@simple ||= {}
-
-$.extend(@simple, {
-  tree: (opts) ->
-    return new Tree opts
-})
+tree = (opts) ->
+  return new Tree(opts)
