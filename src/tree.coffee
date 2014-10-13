@@ -16,10 +16,17 @@ class Tree extends SimpleModule
     children: "children"
     params: {}
 
+
+  @i18n:
+    "zh-CN":
+      loading: "正在加载"
+    "en":
+      loading: "loading"
+
   @_tpl:
     list: """
       <ul>
-        <li class="node loading">正在加载...</li>
+        <li class="node loading">#{@::_t('loading')}...</li>
       </ul>
     """
     node: """
