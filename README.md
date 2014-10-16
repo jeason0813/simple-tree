@@ -17,8 +17,6 @@ simple-tree
 
 <script type="text/javascript" src="[script path]/jquery.min.js"></script>
 <script type="text/javascript" src="[script path]/module.js"></script>
-<!-- simple-util https://github.com/mycolorway/simple-util -->
-<script type="text/javascript" src="[script path]/util.js"></script>
 <script type="text/javascript" src="[script path]/tree.js"></script>
 ```
 
