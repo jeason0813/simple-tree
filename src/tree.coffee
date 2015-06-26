@@ -116,8 +116,8 @@ class Tree extends SimpleModule
       item = $node.data('node')
 
       $node.toggleClass('expand')
-      $toggle.toggleClass('fa-caret-right')
-        .toggleClass('fa-caret-down')
+      $toggle.toggleClass('icon-caret-right')
+        .toggleClass('icon-caret-down')
 
       unless $.isArray item[@properties.children]
         $.ajax
