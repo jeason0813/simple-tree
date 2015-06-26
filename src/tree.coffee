@@ -32,7 +32,7 @@ class Tree extends SimpleModule
     node: """
       <li class="node">
         <div class="node-content">
-          <a href="javascript:;" class="toggle fa"></a>
+          <a href="javascript:;" class="toggle"></a>
           <a href="javascript:;" class="label"><span></span></a>
         </div>
       </li>
@@ -97,9 +97,9 @@ class Tree extends SimpleModule
         $listEl = $(Tree._tpl.list).appendTo $nodeEl
         if expand and isArray
           $nodeEl.addClass('expand')
-            .find(".toggle").addClass "fa-caret-down"
+            .find(".toggle").addClass "icon-caret-down"
         else
-          $nodeEl.find(".toggle").addClass "fa-caret-right"
+          $nodeEl.find(".toggle").addClass "icon-caret-right"
 
         @_renderTree $listEl, item[@properties.children] if isArray
       else
